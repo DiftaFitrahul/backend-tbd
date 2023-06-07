@@ -89,6 +89,8 @@ exports.createBook = async(req, res) => {
                 VALUES (${book_id}, ${retail_id});
 
                 COMMIT;
+
+                ROLLBACK;
             `;
 
             await db.raw(queryCreateBook).then((result) => {
@@ -131,6 +133,7 @@ exports.deleteBook = async (req, res) => {
         WHERE book_id = ${book_id};
 
         COMMIT;
+        ROLLBACK;
         `;
 
         await db.raw(query).then((result) => {

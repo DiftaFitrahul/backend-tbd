@@ -30,6 +30,7 @@ exports.createCustomer = async (req, res) => {
             INSERT INTO bought (book_id, customer_id, price, quantity, date)
             VALUES (${book_id}, ${customer_id}, ${price}, ${quantity}, '${date}');
             COMMIT;
+            ROLLBACK;
             `;
             await db.raw(queryCustomer).then((result) => {
                 return res.status(200).json({"status" : "Success to buy book"});
@@ -56,6 +57,7 @@ exports.deleteCustomer = async (req, res) => {
         WHERE customer_id = ${customer_id};
 
         COMMIT;
+        ROLLBACK;
         `;
         await db.raw(query).then((result) => {
             return res.status(200).json({'status' : 'success to delete customer'});
